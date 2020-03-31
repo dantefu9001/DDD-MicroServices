@@ -1,0 +1,25 @@
+package ${package};
+
+import java.time.LocalDateTime;
+
+public class BaseCommand{
+    private String operator;
+
+    private LocalDateTime triggerTime;
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public LocalDateTime getTriggerTime() {
+        return triggerTime;
+    }
+
+    public void setTriggerTime(LocalDateTime triggerTime) {
+        this.triggerTime = triggerTime;
+    }
+}
