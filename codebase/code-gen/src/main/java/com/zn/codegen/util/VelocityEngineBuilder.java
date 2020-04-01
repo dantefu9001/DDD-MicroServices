@@ -122,13 +122,15 @@ public class VelocityEngineBuilder {
         public void finish() {
 
             try {
-
-                File file = new File(filePath);
-                FileWriter fileWriter = new FileWriter(file);
-                fileWriter.append(result);
-                fileWriter.flush();
-                fileWriter.close();
-
+                String parentPath = filePath.substring(0, filePath.lastIndexOf("/"));
+                File packageDir = new File(parentPath);
+                if (packageDir.mkdirs()) {
+                    File file = new File(filePath);
+                    FileWriter fileWriter = new FileWriter(file);
+                    fileWriter.append(result);
+                    fileWriter.flush();
+                    fileWriter.close();
+                }
             } catch (Throwable e) {
                 if (consumer != null) {
                     consumer.accept(e);
