@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GenApplication implements BuildFile {
 
@@ -18,30 +19,24 @@ public class GenApplication implements BuildFile {
     @Override
     public boolean build() {
         try {
-            String root = System.getProperty("user.dir");
-            File cwd = new File(root);
-            File parent = null;
-            if (cwd.isDirectory()) {
-                parent = cwd.getParentFile();
-            }
-            assert parent != null;
-            String parentPath = parent.getPath();
-            parentPath += "/DDDDemo/src/main/java/";
+            Map<String,String> packageMap = PackageResolver.getPackageBase();
             for (String template : templatePaths) {
                 Integer firstSlash = template.indexOf("/");
                 Integer lastSlash = template.lastIndexOf("/");
                 Integer lastDot = template.lastIndexOf(".");
+
                 String filePath = template.substring(firstSlash, lastSlash + 1);
                 String javaFileName = template.substring(lastSlash + 1, lastDot);
-                String packageBase = "com.tw.ddd";
+
+                String packageBase = packageMap.get("packagePath");
+                String parentPath = packageMap.get("parentPath");
+
                 packageBase += filePath.replace("/", ".");
                 String fullPath = parentPath + packageBase.replace(".", "/");
                 VelocityEngineBuilder.startWithDefault()
                         .withTemplatePath(() -> template)
                         .withContextBuild()
                         .setKV("package", packageBase)
-                        .setKV("className", "Test")
-                        .setKV("Object", "Value")
                         .toFile(fullPath + javaFileName)
                         .finish();
             }
