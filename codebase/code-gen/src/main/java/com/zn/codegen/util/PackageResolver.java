@@ -16,6 +16,7 @@ public class PackageResolver {
         }
         assert parent != null;
         String parentPath = parent.getPath();
+        // TODO: 2020/4/1 get paths from files
         parentPath += "/DDDDemo/src/main/java/";
         String packagePath = "com.tw.ddd";
         packageBaseMap.put("parentPath", parentPath);
