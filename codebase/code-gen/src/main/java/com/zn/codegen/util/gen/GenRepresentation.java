@@ -1,10 +1,12 @@
-package com.zn.codegen.util;
+package com.zn.codegen.util.gen;
 
+import com.zn.codegen.util.BuildJavaFile;
 import org.apache.velocity.Template;
 
 import java.util.List;
 
-public class GenDomain implements BuildFile{
+public class GenRepresentation implements BuildJavaFile {
+
     List<Template> templates;
 
     @Override
